@@ -9,26 +9,41 @@ public class Mine : ISkill {
 
    private bool isMineable;
    private Vector2 previousPosition;
+   private SkillManager manager;
 
    private void OnEnable() {
       // TODO Fix this as when disabled then enabled, ore would be up that's not right.
       isMineable = true;
    }
 
-   public override bool Requirements() {
-      return isMineable;
+   public override bool Requirements(Transform t) {
+      const float PositionDifference = 1.1f;
+      bool flag = true;
+
+      if ((Mathf.Abs(t.position.x - transform.position.x) >= PositionDifference) ||
+          (Mathf.Abs(t.position.y - transform.position.y) >= PositionDifference)) {
+         flag = false;
+      }
+
+      return flag & isMineable;
    }
 
-   public override void Init(Transform transform) {
-      previousPosition = transform.position;
+   public override void Init(SkillManager manager, Transform t) {
+      this.manager = manager;
+      manager.InterruptSkill += InterruptSkill;
+      previousPosition = t.position;
    }
 
    public override IEnumerator Execute(SkillAction action, GameObject go) {
+      const float PositionDifference = 0.2f;
       int hp = ore.hp;
 
       while (true) {
          Vector2 pos = go.transform.position;
-         if (((int)pos.x != (int)previousPosition.x) || ((int)pos.y != (int)previousPosition.y)) {
+         if (interrupt || 
+             (Mathf.Abs(pos.x - previousPosition.x) >= PositionDifference) ||
+             (Mathf.Abs(pos.y - previousPosition.y) >= PositionDifference)) {
+            interrupt = false;
             break;
          }
 
@@ -46,9 +61,11 @@ public class Mine : ISkill {
             break;
          }
 
-         hp -= 4;
-         yield return new WaitForSeconds(1);
+         hp -= 33;
+         yield return new WaitForSeconds(0.5f);
       }
+
+      manager.InterruptSkill -= InterruptSkill;
    }
 
    private IEnumerator ReturnAlpha(GameObject go) {

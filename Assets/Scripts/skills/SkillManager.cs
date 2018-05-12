@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections.Generic;
 
 public enum SkillType {
@@ -34,6 +35,8 @@ public class SkillManager : MonoBehaviour {
 
    private Dictionary<SkillType, SkillStat> skillMap;
 
+   public event Action InterruptSkill;
+
    #region Unity Methods
    private void Awake() {
       skillMap = new Dictionary<SkillType, SkillStat>() {
@@ -62,7 +65,6 @@ public class SkillManager : MonoBehaviour {
     * Xp = Ceiling((Level - 1) * 1.10409 + (Level 2))
     */
    public void AddSkillXp(SkillType type, int xp) {
-      Debug.Log(xp);
       const float xpMultiplier = 1.10409f;
       SkillStat skill;
 
@@ -78,8 +80,6 @@ public class SkillManager : MonoBehaviour {
             }
          }
 
-         Debug.Log(skill.xp);
-         Debug.Log(skillMap[type].xp);
          EventManager.TriggerEvent(EventTags.UpdateSkillUiEvent);
       }
    }
@@ -129,8 +129,11 @@ public class SkillManager : MonoBehaviour {
          if (hit.collider != null) {
             if (hit.collider.tag == "Skill") {
                ISkill action = hit.collider.gameObject.GetComponent<ISkill>();
-               if (action.Requirements()) {
-                  action.Init(transform);
+               if (action.Requirements(transform)) {
+                  if (InterruptSkill != null) {
+                     InterruptSkill();
+                  }
+                  action.Init(this, transform);
                   StartCoroutine(action.Execute(action, gameObject));
                }
             }
