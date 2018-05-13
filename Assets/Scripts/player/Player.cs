@@ -5,11 +5,15 @@ using UnityEngine;
 public class Player : MonoBehaviour {
    private Rigidbody2D body;
    private SkillManager skillManager;
+   BoxCollider2D groundCollider;
+
+   private Collider2D col;
 
 
    private void Awake() {
       body = GetComponent<Rigidbody2D>();
       skillManager = GetComponent<SkillManager>();
+      groundCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
    }
 
    // Use this for initialization
@@ -24,20 +28,41 @@ public class Player : MonoBehaviour {
 
    private void FixedUpdate() {
       float h = Input.GetAxisRaw("Horizontal");
-      float v = Input.GetAxisRaw("Vertical");
+      bool toJump = Input.GetKeyDown(KeyCode.Space);
 
-      Move(h, v);
+      Move(h, toJump);
+   }
+
+   void OnCollisionStay2D(Collision2D other) {
+      if (other.gameObject.tag == "Platform" && Input.GetKeyDown(KeyCode.S)) {
+         col = other.collider;
+         DisableColliderOnPlatform();
+         Invoke("DisableColliderOnPlatform", 0.5f);
+      }
+   }
+
+   public void DisableColliderOnPlatform() {
+      col.enabled = !col.enabled;
    }
 
    public SkillManager GetSkillManager() {
       return skillManager;
    }
 
-   private void Move(float h, float v) {
+   private void Move(float h, bool toJump) {
       const float speed = 3f;
-      Vector3 movement = new Vector3(h, v, 0f);
+      const float jumpForce = 400f;
 
-      movement = movement.normalized * speed * Time.deltaTime;
-      body.MovePosition(transform.position + movement);
+      body.velocity = new Vector2(h * speed, body.velocity.y);
+
+      if (toJump) {
+         ContactFilter2D filter = new ContactFilter2D();
+         filter.SetLayerMask(LayerMask.GetMask("Ground"));
+         filter.useTriggers = true;
+
+         if (groundCollider.IsTouching(filter)) {
+            body.AddForce(new Vector2(0f, jumpForce));
+         }
+      }
    }
 }
