@@ -5,8 +5,8 @@ using System.Collections;
 public class Mine : ISkill {
    // Create a different brush for each ore or change it once it's been placed.
    // Associate what type of ore by ore id or ore enum?  We need to know ore hp and respawn rates.
-   public Ore ore;
-
+    public Ore ore;
+    
    private bool isMineable;
    private Vector2 previousPosition;
    private SkillManager manager;
@@ -16,7 +16,7 @@ public class Mine : ISkill {
       isMineable = true;
    }
 
-   public override bool Requirements(Transform t) {
+    public override bool Requirements(Transform t) {
       const float PositionDifference = 1.1f;
       bool flag = true;
 
