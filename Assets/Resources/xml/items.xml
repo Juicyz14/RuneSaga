@@ -29,28 +29,102 @@
    xsi:schemaLocation="http://www.w3schools.com item.xsd"> -->
 <itemdatabase>
    <item>
-      <id>2000</id>
-      <type>6</type>
-      <name>Iron</name>
+      <id>1000</id>
+      <slot>1</slot>
+      <type>1</type>
+      <name>Iron Pickaxe</name>
+      <str>6</str>
+      <stacksize>1</stacksize>
    </item>
    <item>
+      <id>1001</id>
+      <slot>1</slot>
+      <type>1</type>
+      <name>Platinum Pickaxe</name>
+      <str>8</str>
+      <stacksize>1</stacksize>
+   </item>
+   <item>
+      <id>1002</id>
+      <slot>1</slot>
+      <type>1</type>
+      <name>Gold Pickaxe</name>
+      <str>11</str>
+      <stacksize>1</stacksize>
+   </item>
+   <item>
+      <id>1003</id>
+      <slot>1</slot>
+      <type>1</type>
+      <name>Tungsten Pickaxe</name>
+      <str>15</str>
+      <stacksize>1</stacksize>
+   </item>
+   <item>
+      <id>1004</id>
+      <slot>1</slot>
+      <type>1</type>
+      <name>Titanium Pickaxe</name>
+      <str>20</str>
+      <stacksize>1</stacksize>
+   </item>
+   <item>
+      <id>1005</id>
+      <slot>1</slot>
+      <type>1</type>
+      <name>Erbium Pickaxe</name>
+      <str>26</str>
+      <stacksize>1</stacksize>
+   </item>
+    <item>
+      <id>1006</id>
+      <slot>1</slot>
+      <type>1</type>
+      <name>Lithium Pickaxe</name>
+      <str>33</str>
+      <stacksize>1</stacksize>
+    </item>
+    <item>
+      <id>1007</id>
+      <slot>1</slot>
+      <type>1</type>
+      <name>Uranium Pickaxe</name>
+      <str>41</str>
+      <stacksize>1</stacksize>
+    </item>
+    <item>
+      <id>2000</id>
+      <slot>6</slot>
+      <type>0</type>
+      <name>Iron</name>
+      <stacksize>20</stacksize>
+    </item>
+   <item>
       <id>2001</id>
-      <type>6</type>
+      <slot>6</slot>
+      <type>0</type>
       <name>Platinum</name>
+      <stacksize>20</stacksize>
    </item>
    <item>
       <id>2002</id>
-      <type>6</type>
+      <slot>6</slot>
+      <type>0</type>
       <name>Gold</name>
+      <stacksize>20</stacksize>
    </item>
    <item>
       <id>2003</id>
-      <type>6</type>
+      <slot>6</slot>
+      <type>0</type>
       <name>Tungsten</name>
+      <stacksize>20</stacksize>
    </item>
    <item>
       <id>2004</id>
-      <type>6</type>
+      <slot>6</slot>
+      <type>0</type>
       <name>Titanium</name>
+      <stacksize>20</stacksize>
    </item>
 </itemdatabase>

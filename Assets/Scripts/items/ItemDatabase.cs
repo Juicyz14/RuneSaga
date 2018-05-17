@@ -53,10 +53,22 @@ public class ItemDatabase : MonoBehaviour {
       XmlNodeList itemNodeList = itemNode.SelectNodes("item");
       foreach (XmlNode node in itemNodeList) {
          BaseItem item = new BaseItem();
+         XmlNode attrNode;
 
-         item.ItemID = Convert.ToInt16(node.SelectSingleNode("id").InnerText);
-         item.ItemType = (BaseItem.ItemTypes)Convert.ToInt16(node.SelectSingleNode("type").InnerText);
+         item.ItemID = Convert.ToInt32(node.SelectSingleNode("id").InnerText);
+         item.SlotType = (BaseItem.SlotTypes)Convert.ToInt32(node.SelectSingleNode("slot").InnerText);
+         item.ItemType = (BaseItem.ItemTypes)Convert.ToInt32(node.SelectSingleNode("type").InnerText);
          item.ItemName = node.SelectSingleNode("name").InnerText;
+
+         attrNode = node.SelectSingleNode("str");
+         if (attrNode != null) {
+            item.Strength = Convert.ToInt32(attrNode.InnerText);
+         }
+
+         attrNode = node.SelectSingleNode("stacksize");
+         if (attrNode != null) {
+            item.Stacksize = Convert.ToInt32(attrNode.InnerText);
+         }
 
          database.Add(item.ItemID, item);
       }
