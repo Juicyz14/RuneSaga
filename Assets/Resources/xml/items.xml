@@ -30,27 +30,27 @@
 <itemdatabase>
    <item>
       <id>2000</id>
-      <type>5</type>
+      <type>6</type>
       <name>Iron</name>
    </item>
    <item>
       <id>2001</id>
-      <type>5</type>
+      <type>6</type>
       <name>Platinum</name>
    </item>
    <item>
       <id>2002</id>
-      <type>5</type>
+      <type>6</type>
       <name>Gold</name>
    </item>
    <item>
       <id>2003</id>
-      <type>5</type>
+      <type>6</type>
       <name>Tungsten</name>
    </item>
    <item>
       <id>2004</id>
-      <type>5</type>
+      <type>6</type>
       <name>Titanium</name>
    </item>
 </itemdatabase>

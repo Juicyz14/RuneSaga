@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73ed42525e850eb43911cf8ccebc75bb, type: 3}
   m_Name: Titanium
   m_EditorClassIdentifier: 
+  itemId: 2004
   hp: 297
   respawnRate: 180
   xp: 80

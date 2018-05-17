@@ -4,22 +4,25 @@ using System;
 using System.Xml;
 
 public class ItemDatabase : MonoBehaviour {
+   // Size comes from items.xml.  Scrolling to the very bottom should give you size.
+   private const int MaxSize = 2004;
+
    // Array is likely better as it is easier O(1) to grab information from and don't need to loop...
    // List is easier to add things but since our database will be constant size for the most part...
    // Could also use List to put in item since it's better at allocating more size then convert to array
    // Empty list in that case, could also use a map or set to id -> item.
    // HashMap or HashSet is the best.
-   private Dictionary<int, BaseItem> database = new Dictionary<int, BaseItem>();
+   private Dictionary<int, BaseItem> database = new Dictionary<int, BaseItem>(MaxSize);
 
    public static ItemDatabase instance = null;
 
    void Awake() {
       instance = this;
       //Parse the items and put into the dictionary, database
-      parseXmlDocument();
+      ParseXmlDocument();
    }
 
-   public BaseItem getItemById(int id) {
+   public BaseItem GetItemById(int id) {
       return database[id];
    }
 
@@ -33,7 +36,7 @@ public class ItemDatabase : MonoBehaviour {
     *
     * @return {[type]} [description]
     */
-   private void parseXmlDocument() {
+   private void ParseXmlDocument() {
       const string xmlUrl = "Xml/items";
       TextAsset xml = (TextAsset)Resources.Load(xmlUrl);
       XmlDocument doc = new XmlDocument();

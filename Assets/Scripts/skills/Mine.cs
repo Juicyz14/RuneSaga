@@ -54,6 +54,7 @@ public class Mine : ISkill {
          if (hp <= 0) {
             if (isMineable) {
                isMineable = false;
+               Inventory.instance.Add(ore.itemId);
                AddXpToSkill(SkillType.Mining, ore.xp);
 
                Color temp = action.gameObject.GetComponent<SpriteRenderer>().color;

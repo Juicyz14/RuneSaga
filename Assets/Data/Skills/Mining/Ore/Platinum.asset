@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73ed42525e850eb43911cf8ccebc75bb, type: 3}
   m_Name: Platinum
   m_EditorClassIdentifier: 
+  itemId: 2001
   hp: 55
   respawnRate: 10
   xp: 15
