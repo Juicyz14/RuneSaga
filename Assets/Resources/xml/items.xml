@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+  public enum ItemTypes {
+    WEAPON,
+    EQUIPMENT,
+    RUNE,
+    POTION,
+    QUEST
+  }
+  
+  public string ItemName { get; set; }
+  public string ItemDescription { get; set; }
+  public string ItemID { get; set; }
+  public ItemTypes ItemType { get; set; }
+
+  public int Health { get; set; }
+  public int Mana { get; set; }
+  public int Strength { get; set; }
+  public int Intelligence { get; set; }
+  public int Dexterity { get; set; }
+  public int Defense { get; set; }
+  public int Spirit { get; set; }
+  public int Proficiency { get; set; }
+-->
+
+<!-- <itemdatabase xmlns="http://www.w3schools.com"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.w3schools.com item.xsd"> -->
+<itemdatabase>
+   <item>
+      <id>2000</id>
+      <type>5</type>
+      <name>Iron</name>
+   </item>
+   <item>
+      <id>2001</id>
+      <type>5</type>
+      <name>Platinum</name>
+   </item>
+   <item>
+      <id>2002</id>
+      <type>5</type>
+      <name>Gold</name>
+   </item>
+   <item>
+      <id>2003</id>
+      <type>5</type>
+      <name>Tungsten</name>
+   </item>
+   <item>
+      <id>2004</id>
+      <type>5</type>
+      <name>Titanium</name>
+   </item>
+</itemdatabase>

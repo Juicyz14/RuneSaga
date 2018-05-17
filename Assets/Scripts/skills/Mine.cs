@@ -11,7 +11,7 @@ public class Mine : ISkill {
    private Vector2 previousPosition;
    private SkillManager manager;
 
-   private void OnEnable() {
+   private void Awake() {
       // TODO Fix this as when disabled then enabled, ore would be up that's not right.
       isMineable = true;
    }
@@ -34,7 +34,11 @@ public class Mine : ISkill {
       previousPosition = t.position;
    }
 
-   public override IEnumerator Execute(SkillAction action, GameObject go) {
+   public override void Execute(SkillAction action, GameObject go) {
+      StartCoroutine(Run(action, go));
+   }
+
+   private IEnumerator Run(SkillAction action, GameObject go) {
       const float PositionDifference = 0.2f;
       int hp = ore.hp;
 

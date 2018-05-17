@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
+   private InventoryUI inventoryUI;
+   public List<BaseItem> items = new List<BaseItem>();
 
-    #region Singleton
-    public static Inventory instance;
+   #region Singleton
+   public static Inventory instance;
 
     private void Awake()
     {
@@ -17,14 +19,10 @@ public class Inventory : MonoBehaviour
     }
     #endregion
 
-    private InventoryUI inventoryUI;
-
-    private void Start()
+   private void Start()
     {
         inventoryUI = GetComponent<InventoryUI>();
     }
-
-    public List<BaseItem> items = new List<BaseItem>();
 
     public void Add(BaseItem item)
     {

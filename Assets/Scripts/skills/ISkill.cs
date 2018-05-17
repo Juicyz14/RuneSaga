@@ -8,7 +8,7 @@ public abstract class ISkill : SkillAction {
 
    public abstract bool Requirements(Transform t);
    public abstract void Init(SkillManager manager, Transform t);
-   public abstract IEnumerator Execute(SkillAction action, GameObject go);
+   public abstract void Execute(SkillAction action, GameObject go);
 
    protected void AddXpToSkill(SkillType type, int xp) {
       if (AddXp != null) {

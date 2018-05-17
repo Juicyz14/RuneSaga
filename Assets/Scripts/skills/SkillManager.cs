@@ -134,7 +134,7 @@ public class SkillManager : MonoBehaviour {
                      InterruptSkill();
                   }
                   action.Init(this, transform);
-                  StartCoroutine(action.Execute(action, gameObject));
+                  action.Execute(action, gameObject);
                }
             }
          }
