@@ -129,11 +129,11 @@ public class SkillManager : MonoBehaviour {
          if (hit.collider != null) {
             if (hit.collider.tag == "Skill") {
                ISkill action = hit.collider.gameObject.GetComponent<ISkill>();
-               if (action.Requirements(transform)) {
+               if (action.Requirements(this, transform)) {
                   if (InterruptSkill != null) {
                      InterruptSkill();
                   }
-                  action.Init(this, transform);
+                  action.Init(transform);
                   action.Execute(action, gameObject);
                }
             }

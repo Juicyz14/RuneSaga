@@ -3,8 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Inventory : MonoBehaviour
-{
+public class Inventory : MonoBehaviour {
    // Default size of inventory is 10.  It is expandable by using bags.
    private const int MaxSize = 10;
    private const int NoItem = -1;
@@ -16,44 +15,47 @@ public class Inventory : MonoBehaviour
    #region Singleton
    public static Inventory instance;
 
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this; ;
-        }
-    }
-    #endregion
+   private void Awake() {
+      if (instance == null) {
+         instance = this; ;
+      }
+   }
+   #endregion
 
-   private void Start()
-   {
+   private void Start() {
       inventoryUI = GetComponent<InventoryUI>();
 
       for (int i = 0; i < MaxSize; i++) {
          items.Add(i, null);
       }
+
+      Add(1000);
    }
 
    public Dictionary<int, BaseItem> GetInventory() {
       return items;
    }
 
-   public void Add(BaseItem item)
-   {
+   public void Add(BaseItem item) {
       int loc = CheckInventory(item.ItemID);
+      int slot = FindEmptySlot();
 
-      if (loc == NoItem) {
-         // Add item to inventory
-         int slot = FindEmptySlot();
-         items[slot] = item;
-         Debug.Log("Item added");
+      if ((loc != NoItem) || (slot != NoItem)) {
+         int temp = NoItem;
+         if (!item.IsStackable() || (loc == NoItem)) {
+            // Add item to inventory
+            items[slot] = (BaseItem)item.Clone();
+            temp = slot;
+         }
+         else {
+            // Add to existing items stack size.
+            items[loc].Count++;
+            temp = loc;
+         }
 
          if (NewItemAdded != null) {
-            NewItemAdded(slot, item);
+            NewItemAdded(temp, item);
          }
-      }
-      else {
-         // Add to existing items stack size.
       }
    }
 
@@ -67,11 +69,25 @@ public class Inventory : MonoBehaviour
       //inventoryUI.Remove(item);
    }
 
+   public BaseItem GetItem(BaseItem.ItemTypes type) {
+      BaseItem item = null;
+      for (int i = 0; i < items.Count; i++) {
+         if (items[i] != null) {
+            if (items[i].ItemType == type) {
+               item = items[i];
+               break;
+            }
+         }
+      }
+
+      return item;
+   }
+
    private int CheckInventory(int id) {
       // TODO Need to add more than id check.  Need to check stats or maybe an address.
       int pos = NoItem;
       for (int i = 0; i < items.Count; i++) {
-         if ((items[i] != null) && (items[i].ItemID == id)) {
+         if ((items[i] != null) && (items[i].ItemID == id) && (items[i].Count < items[i].Stacksize)) {
             pos =  i;
             break;
          }

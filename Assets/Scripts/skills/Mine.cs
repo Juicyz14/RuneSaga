@@ -16,11 +16,16 @@ public class Mine : ISkill {
       isMineable = true;
    }
 
-   public override bool Requirements(Transform t) {
+   public override bool Requirements(SkillManager manager, Transform t) {
       const float PositionDifference = 1.1f;
       bool flag = true;
+      this.manager = manager;
 
-      if ((Mathf.Abs(t.position.x - transform.position.x) >= PositionDifference) ||
+      BaseItem pickaxe = Inventory.instance.GetItem(BaseItem.ItemTypes.PICKAXE);
+
+      if ((pickaxe == null) ||
+          (manager.GetSkillLevel(SkillType.Mining) < ore.level) ||
+          (Mathf.Abs(t.position.x - transform.position.x) >= PositionDifference) ||
           (Mathf.Abs(t.position.y - transform.position.y) >= PositionDifference)) {
          flag = false;
       }
@@ -28,10 +33,9 @@ public class Mine : ISkill {
       return flag & isMineable;
    }
 
-   public override void Init(SkillManager manager, Transform t) {
-      this.manager = manager;
-      manager.InterruptSkill += InterruptSkill;
+   public override void Init(Transform t) {
       previousPosition = t.position;
+      manager.InterruptSkill += InterruptSkill;
    }
 
    public override void Execute(SkillAction action, GameObject go) {
@@ -41,6 +45,12 @@ public class Mine : ISkill {
    private IEnumerator Run(SkillAction action, GameObject go) {
       const float PositionDifference = 0.2f;
       int hp = ore.hp;
+      int dmg = 0;
+
+      BaseItem pickaxe = Inventory.instance.GetItem(BaseItem.ItemTypes.PICKAXE);
+      if (pickaxe != null) {
+         dmg = pickaxe.Strength;
+      }
 
       while (true) {
          Vector2 pos = go.transform.position;
@@ -66,7 +76,7 @@ public class Mine : ISkill {
             break;
          }
 
-         hp -= 33;
+         hp -= dmg;
          yield return new WaitForSeconds(0.5f);
       }
 

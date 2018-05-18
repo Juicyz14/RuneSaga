@@ -7,19 +7,16 @@ public class Tradepack : ISkill {
    private static bool isTradepacking;
    private static Vector2 startLocation;
 
-   private SkillManager manager;
-
    private void Awake() {
       isTradepacking = false;
    }
 
-   public override bool Requirements(Transform t) {
+   public override bool Requirements(SkillManager manager, Transform t) {
       // Check resources in inventory to see if they can make one
       return true;
    }
 
-   public override void Init(SkillManager manager, Transform t) {
-      this.manager = manager;
+   public override void Init(Transform t) {
       startLocation = transform.position;
    }
 
