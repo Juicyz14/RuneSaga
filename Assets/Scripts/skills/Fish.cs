@@ -4,27 +4,47 @@ using UnityEngine;
 
 public class Fish : ISkill {
 
+    public Fishy fish;
+
     private bool isFishable;
+    private bool fishing;
     private SkillManager manager;
     private Vector2 previousPosition;
 
     private float startTime;
 
+    public void Awake()
+    {
+        isFishable = true;
+        GameInputManager.ObserveMouseButton(0);
+        GameInputManager.Register(OnInputEvent);
+    }
+
+    private void OnInputEvent(GameInputManager.EventData data)
+    {
+        if (fishing)
+        {
+            Debug.Log("Caught the fish!");
+            Inventory.instance.Add(fish.itemId);
+            AddXpToSkill(SkillType.Fishing, fish.xp);
+
+        }
+    }
 
     public override void Execute(SkillAction action, GameObject go)
     {
         StartCoroutine(Run(action, go));
     }
 
-    public override void Init(SkillManager manager, Transform t)
+    public override void Init(Transform t)
     {
-        this.manager = manager;
         manager.InterruptSkill += InterruptSkill;
         previousPosition = t.position;
     }
 
-    public override bool Requirements(Transform t)
+    public override bool Requirements(SkillManager manager, Transform t)
     {
+        this.manager = manager;
         const float PositionDifference = 1.1f;
         bool flag = true;
 
@@ -34,21 +54,45 @@ public class Fish : ISkill {
             flag = false;
         }
 
-        return flag;
+        return flag && isFishable;
     }
 
     private IEnumerator Run(SkillAction action, GameObject go)
     {
-        startTime = Time.time;
+        while (true)
+        {
+            startTime = Time.time;
+            isFishable = false;
 
-        Debug.Log("Fishing has begun.");
-        yield return new WaitForSeconds(3);
 
-        Inventory.instance.Add(ItemDatabase.instance.getItemById(3000));
-        Debug.Log(Inventory.instance);
-        
+            Debug.Log("Fishing has begun.");
+            yield return new WaitForSeconds(3);
 
-        manager.InterruptSkill -= InterruptSkill;
+            int random = Random.Range(0, 3);
+            while (random != 1)
+            {
+                Debug.Log("didnt find a fish...");
+                yield return new WaitForSeconds(1);
+                random = Random.Range(0, 3);
+            }
+
+            fishing = true;
+
+            Debug.Log("Got a bite! Click your mouse!");
+            //Inventory.instance.Add(ItemDatabase.instance.GetItemById(3000));
+            //Debug.Log(Inventory.instance);
+
+            yield return new WaitForSeconds(1);
+
+            fishing = false;
+
+
+            manager.InterruptSkill -= InterruptSkill;
+            break;
+        }
+
+        isFishable = true;
+
 
     }
         // Use this for initialization
