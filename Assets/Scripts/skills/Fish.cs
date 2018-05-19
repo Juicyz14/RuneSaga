@@ -8,10 +8,8 @@ public class Fish : ISkill {
 
     private bool isFishable;
     private bool fishing;
-    private SkillManager manager;
-    private Vector2 previousPosition;
 
-    private float startTime;
+    private SkillManager manager;
 
     public void Awake()
     {
@@ -39,7 +37,6 @@ public class Fish : ISkill {
     public override void Init(Transform t)
     {
         manager.InterruptSkill += InterruptSkill;
-        previousPosition = t.position;
     }
 
     public override bool Requirements(SkillManager manager, Transform t)
@@ -61,14 +58,13 @@ public class Fish : ISkill {
     {
         while (true)
         {
-            startTime = Time.time;
             isFishable = false;
 
 
             Debug.Log("Fishing has begun.");
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(3); // wait 3 seconds before attempting to get a bite
 
-            int random = Random.Range(0, 3);
+            int random = Random.Range(0, 3); // 33% chance of getting a bite per loop(possible outcomes 0, 1, 2)
             while (random != 1)
             {
                 Debug.Log("didnt find a fish...");
@@ -76,13 +72,11 @@ public class Fish : ISkill {
                 random = Random.Range(0, 3);
             }
 
-            fishing = true;
+            fishing = true; // this variable is for our OnInputEvent for when we need to click again to catch the fish
 
             Debug.Log("Got a bite! Click your mouse!");
-            //Inventory.instance.Add(ItemDatabase.instance.GetItemById(3000));
-            //Debug.Log(Inventory.instance);
 
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1); // you have 1 second after getting a bite to click before the fish escapes
 
             fishing = false;
 
