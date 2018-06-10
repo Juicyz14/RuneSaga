@@ -9,4 +9,6 @@ public class Fishy : ScriptableObject {
 
     public int xp = 0;
     public int level = 1;
+
+    public int catchProbability;
 }

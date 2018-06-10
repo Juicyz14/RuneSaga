@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Fish : ISkill {
 
-    public Fishy fish;
+    public List<Fishy> fish;
 
     private bool isFishable;
     private bool fishing;
@@ -23,8 +23,8 @@ public class Fish : ISkill {
         if (fishing)
         {
             Debug.Log("Caught the fish!");
-            Inventory.instance.Add(fish.itemId);
-            AddXpToSkill(SkillType.Fishing, fish.xp);
+            Inventory.instance.Add(fish[1].itemId);
+            AddXpToSkill(SkillType.Fishing, fish[1].xp);
 
         }
     }
@@ -73,6 +73,8 @@ public class Fish : ISkill {
             }
 
             fishing = true; // this variable is for our OnInputEvent for when we need to click again to catch the fish
+
+            // TO-DO: visual 'got a bite' cue animation
 
             Debug.Log("Got a bite! Click your mouse!");
 

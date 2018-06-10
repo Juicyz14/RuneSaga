@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b461dc85c85163418345cde0eb1c829, type: 3}
   m_Name: Shrimp
   m_EditorClassIdentifier: 
-  itemId: -1
-  xp: 0
+  itemId: 3000
+  xp: 10
   level: 1
