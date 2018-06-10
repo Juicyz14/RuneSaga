@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 
 public enum SkillType {
-   Fishing,
+   Fishing = 0,
    Cooking,
    Mining,
    Blacksmithing,

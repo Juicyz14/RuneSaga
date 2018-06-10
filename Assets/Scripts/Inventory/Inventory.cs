@@ -37,7 +37,7 @@ public class Inventory : MonoBehaviour {
    }
 
    public void Add(BaseItem item) {
-      int loc = CheckInventory(item.ItemID);
+      int loc = CheckInventory(item.ItemID, true);
       int slot = FindEmptySlot();
 
       if ((loc != NoItem) || (slot != NoItem)) {
@@ -64,9 +64,36 @@ public class Inventory : MonoBehaviour {
       Add(itemToAdd);
    }
 
-   public void Remove(BaseItem item) {
-      //items.Remove(item);
-      //inventoryUI.Remove(item);
+   public void Remove(int id) {
+      int pos = CheckInventory(id, false);
+
+      if (pos != NoItem) {
+         items.Remove(pos);
+      }
+   }
+
+   public bool Contains(int id) {
+      bool isInInventory = false;
+      for (int i = 0; i < items.Count; i++) {
+         if ((items[i] != null) && (items[i].ItemID == id)) {
+            isInInventory = true;
+            break;
+         }
+      }
+
+      return isInInventory;
+   }
+
+   public bool Contains(int[] ids) {
+      bool isInInventory = true;
+      foreach (int id in ids) {
+         if (!Contains(id)) {
+            isInInventory = false;
+            break;
+         }
+      }
+
+      return isInInventory;
    }
 
    public BaseItem GetItem(BaseItem.ItemTypes type) {
@@ -83,11 +110,11 @@ public class Inventory : MonoBehaviour {
       return item;
    }
 
-   private int CheckInventory(int id) {
+   private int CheckInventory(int id, bool useStacksize) {
       // TODO Need to add more than id check.  Need to check stats or maybe an address.
       int pos = NoItem;
       for (int i = 0; i < items.Count; i++) {
-         if ((items[i] != null) && (items[i].ItemID == id) && (items[i].Count < items[i].Stacksize)) {
+         if ((items[i] != null) && (items[i].ItemID == id) && (!useStacksize || (items[i].Count < items[i].Stacksize))) {
             pos =  i;
             break;
          }
