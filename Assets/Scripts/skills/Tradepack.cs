@@ -25,9 +25,12 @@ public class Tradepack : ISkill {
       // Doesnt do much.  If player is trade packing then we want to turn it in.
       if (isTradepacking) {
          if ((Mathf.Abs(startLocation.x - transform.position.x) >= Distance) && (Mathf.Abs(startLocation.y - transform.position.y) >= Distance)) {
-            // Valid location to turn in tradepack.  Turn in trade pack
-            // Remove pack from player and give reward
-            AddXpToSkill(SkillType.Tradepacking, 50);
+            // Check that player still has the pack
+            // if (validPack) {
+               // Valid location to turn in tradepack.  Turn in trade pack
+               // Remove pack from player and give reward
+               AddXpToSkill(SkillType.Tradepacking, pack.xp);
+            // }
          }
          else {
             // If it's the same location as start, send player an ugly message that he sucks
@@ -36,7 +39,12 @@ public class Tradepack : ISkill {
       }
       else {
          // Create tradepack and remove resources
-         isTradepacking = true;
+         if (Inventory.instance.Contains(pack.materials)) {
+            foreach (int id in pack.materials) {
+               Inventory.instance.Contains(id);
+            }
+            isTradepacking = true;
+         }
       }
    }
 }
