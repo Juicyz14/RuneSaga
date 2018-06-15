@@ -8112,7 +8112,7 @@ Transform:
   m_LocalPosition: {x: 9.31, y: 1.03, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 977362428}
+  m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1749008058
@@ -8238,7 +8238,7 @@ Transform:
   - {fileID: 1358909309}
   - {fileID: 1196918658}
   - {fileID: 1113523245}
-  - {fileID: 977362428}
+  - {fileID: 0}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
