@@ -7,6 +7,8 @@ public class Player : MonoBehaviour {
    private SkillManager skillManager;
    BoxCollider2D groundCollider;
 
+    ProjectileEngine pEngine;
+
    private Collider2D col;
 
 
@@ -14,6 +16,7 @@ public class Player : MonoBehaviour {
       body = GetComponent<Rigidbody2D>();
       skillManager = GetComponent<SkillManager>();
       groundCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
+        pEngine = GameObject.Find("Global").GetComponent<ProjectileEngine>();
    }
 
    // Use this for initialization
@@ -29,8 +32,9 @@ public class Player : MonoBehaviour {
    private void FixedUpdate() {
       float h = Input.GetAxisRaw("Horizontal");
       bool toJump = Input.GetKeyDown(KeyCode.Space);
+      bool ToShoot = Input.GetMouseButtonDown(1);
 
-      Move(h, toJump);
+      Move(h, toJump, ToShoot);
    }
 
    void OnCollisionStay2D(Collision2D other) {
@@ -49,7 +53,7 @@ public class Player : MonoBehaviour {
       return skillManager;
    }
 
-   private void Move(float h, bool toJump) {
+   private void Move(float h, bool toJump, bool toShoot) {
       const float speed = 3f;
       const float jumpForce = 400f;
 
@@ -64,5 +68,11 @@ public class Player : MonoBehaviour {
             body.AddForce(new Vector2(0f, jumpForce));
          }
       }
+
+      if(toShoot)
+        {
+
+            pEngine.addProjectile();
+        }
    }
 }
